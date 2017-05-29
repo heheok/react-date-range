@@ -31,7 +31,8 @@ const defaultTheme = {
   },
 
   Calendar        : {
-    width         : 280,
+    width         : 347,
+    _height       : 347,
     padding       : 10,
     background    : '#ffffff',
     borderRadius  : '2px',
@@ -171,11 +172,15 @@ const defaultTheme = {
 export default (customTheme = {}) => {
 
   let calendarWidth   = defaultTheme.Calendar.width;
+  let calendarHeight  = defaultTheme.Calendar._height;
   let calendarPadding = defaultTheme.Calendar.padding;
   let cellMargin      = defaultTheme.Day.margin || 0;
 
   if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('width') ) {
     calendarWidth = customTheme.Calendar.width;
+  }
+  if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('_height') ) {
+    calendarHeight = customTheme.Calendar._height;
   }
 
   if ( customTheme.Calendar && customTheme.Calendar.hasOwnProperty('padding') ) {
@@ -186,7 +191,8 @@ export default (customTheme = {}) => {
       cellMargin = customTheme.Day.margin;
   }
 
-  const cellSize = (( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
+  const cellSizeWidth = (( parseInt(calendarWidth) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
+  const cellSizeHeight = (( parseInt(calendarHeight) - parseInt(calendarPadding) * 2 ) / 7 ) - ( parseInt(cellMargin) * 2 );
 
   return {
     DateRange : { ...defaultTheme.DateRange, ...customTheme.DateRange },
@@ -194,9 +200,9 @@ export default (customTheme = {}) => {
     Calendar : { ...defaultTheme.Calendar, ...customTheme.Calendar },
 
     Day : {
-      width         : cellSize,
-      height        : cellSize,
-      lineHeight    : cellSize + 'px',
+      width         : cellSizeWidth,
+      height        : 28,
+      lineHeight    : 28 + 'px',
       ...defaultTheme.Day,
       ...customTheme.Day,
     },
@@ -220,9 +226,9 @@ export default (customTheme = {}) => {
     DayInRange : { ...defaultTheme.DayInRange, ...customTheme.DayInRange },
 
     Weekday : {
-      width         : cellSize,
-      height        : cellSize / 2,
-      lineHeight    : cellSize / 2 + 'px',
+      width         : cellSizeWidth,
+      height        : 28,
+      lineHeight    : 28 + 'px',
       ...defaultTheme.Weekday,
       ...customTheme.Weekday,
     },
